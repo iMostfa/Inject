@@ -127,6 +127,18 @@ rootViewController.pushViewController(viewController, animated: true)
 
 > *Remember you **don't need** to remove this code when you are done, it's NO-OP in production builds.*
 
+#### Injection Hook
+depending on your the architecture used in your UIKit App, you might want to attach a hook to be executed each time a view controller is reloaded.
+
+Eg. you might want to bind the `controller` to the presenter each-time there's a reload, to achieve this you can use `onInjectionHook`
+   Example:
+
+```swift
+    let myView = ViewControllerHost(TestViewController())
+    myView.onInjectionHook = { presenter in
+    presenter.ui = (myView as? ViewControllerHost<TestViewController>)?.instance /*each time there's a reload, this line will be executed*/
+```
+
 #### iOS 12
 You need to add -weak_framework SwiftUI to Other Linker Flags for iOS 12 to work.
 
